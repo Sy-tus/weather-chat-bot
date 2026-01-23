@@ -161,14 +161,22 @@
 
 .timestamp {
   font-size: 11px;
-  color: #6b7280;
   margin-top: 6px;
+  opacity: 0.75;
+}
+
+/* Bot timestamp (light background) */
+.message.bot .timestamp {
+  color: #6b7280;
+  text-align: left;
+}
+
+/* User timestamp (dark background) */
+.message.user .timestamp {
+  color: #e0e7ff;
   text-align: right;
 }
 
-.message.bot .timestamp {
-  text-align: left;
-}
 
 /* Responsive */
 
