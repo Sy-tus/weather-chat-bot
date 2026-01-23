@@ -4,9 +4,20 @@ import { sendToWeatherAgent } from "../api/weatherAgent";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
+const getTime = () =>
+  new Date().toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
 export function WeatherChatbot() {
   const [messages, setMessages] = useState([
-    { id: 1, type: "bot", content: "Hi! Ask me about the weather 🌤️" },
+    {
+      id: 1,
+      type: "bot",
+      content: "Hi! Ask me about the weather 🌤️",
+      timestamp: getTime(),
+    },
   ]);
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
@@ -45,7 +56,12 @@ Assistant:
 
     setMessages((m) => [
       ...m,
-      { id: Date.now(), type: "user", content: userText },
+      {
+        id: Date.now(),
+        type: "user",
+        content: userText,
+        timestamp: getTime(),
+      },
     ]);
 
     setTyping(true);
@@ -59,13 +75,23 @@ Assistant:
 
       setMessages((m) => [
         ...m,
-        { id: Date.now() + 1, type: "bot", content: reply },
+        {
+          id: Date.now() + 1,
+          type: "bot",
+          content: reply,
+          timestamp: getTime(),
+        },
       ]);
     } catch (err) {
       if (err.name !== "CanceledError") {
         setMessages((m) => [
           ...m,
-          { id: Date.now() + 1, type: "bot", content: "⚠️ Error getting response" },
+          {
+            id: Date.now() + 1,
+            type: "bot",
+            content: "⚠️ Error getting response",
+            timestamp: getTime(),
+          },
         ]);
       }
     } finally {
@@ -81,7 +107,12 @@ Assistant:
 
   const clearChat = () => {
     setMessages([
-      { id: Date.now(), type: "bot", content: "Chat cleared. Ask again 🌤️" },
+      {
+        id: Date.now(),
+        type: "bot",
+        content: "Chat cleared. Ask again 🌤️",
+        timestamp: getTime(),
+      },
     ]);
   };
 
@@ -99,6 +130,7 @@ Assistant:
               <ReactMarkdown remarkPlugins={[remarkGfm]}>
                 {m.content}
               </ReactMarkdown>
+              <div className="timestamp">{m.timestamp}</div>
             </div>
           </div>
         ))}

@@ -159,6 +159,19 @@
   font-weight: bold;
 }
 
+.timestamp {
+  font-size: 11px;
+  color: #6b7280;
+  margin-top: 6px;
+  text-align: right;
+}
+
+.message.bot .timestamp {
+  text-align: left;
+}
+
+/* Responsive */
+
 @media screen and (max-width: 600px) {
   .chat-container {
     height: -webkit-fill-available;
